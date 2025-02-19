@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<style>
+    body,
+    html {
+        padding: 0;
+        margin: 0;
+        
+        width: 100%;
+    }
+
+    .container {
+        margin: auto;
+    }
+
+    .banner {
+        height: 500px;
+        width: 300px;
+        background-position: center;
+        -webkit-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+        background-size: contain;
+        background-repeat: no-repeat
+    }
+
+        .banner:hover {
+            -webkit-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+
+    button {
+        background: #f40612 !important;
+        color: #fff !important;
+        font-size: 18px;
+        padding: 0.5rem 3rem;
+        outline: none;
+        border: 0 !important;
+    }
+
+    .last {
+        display: flex;
+        width: 1140px;
+        margin: auto;
+        margin-top: 6.5rem;
+        justify-content: space-evenly;
+    }
+
+    .is-one-quarter {
+        margin: 30px;
+    }
+
+    .site-info {
+        font-size: 50px;
+        font-weight: 500;
+        width: 900px;
+        color: #345457;
+        z-index: 100;
+        margin: auto;
+        margin-top: 80px;
+        margin-bottom: 80px;
+        text-align: center;
+    }
+
+    .title {
+        margin-top: 80px;
+    }
+</style>
+<div class="title">
+</div>
+
+
+<div class="container">
+    <div class="site-info">
+        Welcome to Magic Book, the largest online platform for buying books!
+        Browse through the endless list of books. Here shopping
+        is made simple, fast and cheap. Find the best deals!
+    </div>
+    <div class="columns is-multiline p-0 pt-6 last">
+        <div class="column is-one-quarter">
+            <div class="banner" style="background-image: url(https://m.media-amazon.com/images/I/71Q1Iu4suSL._AC_UF894,1000_QL80_DpWeblab_.jpg) "></div>
+        </div>
+        <div class="column is-one-quarter">
+            <div class="banner" style="background-image: url(https://upload.wikimedia.org/wikipedia/en/d/db/The_Maze_Runner_cover.png) "></div>
+        </div>
+        <div class="column is-one-quarter">
+            <div class="banner" style="background-image: url(https://images.penguinrandomhouse.com/cover/9780553808049) "></div>
+        </div>
+        
+    </div>
+
+</div>

@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/LibraryStyle.css")
+    @Styles.Render("~/Content/HomeStyle.css")
+
+    <style>
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .logo-image {
+            height: 50px;
+            width: 120px;
+            margin-right: 50px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0.8rem;
+            background-color: white;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(228, 188, 127,0.5);
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: rgb(228, 188, 127);
+            }
+
+        .navbar {
+            background: #345457;
+        }
+
+        #footer {
+            height: 20px;
+            color: #345457;
+        }
+
+        .nav-link {
+            color: #E4BC7F;
+            margin-left: 10px;
+        }
+
+
+        #socials li {
+            display: inline-block;
+            margin: 10px;
+        }
+
+            #socials li a i {
+                color: #E4BC7F;
+            }
+
+        #footer p {
+            margin: 0 0 -35px;
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+        <div class="container">
+            <a href="@Url.Action("Index", "Books")">
+                <img src="~/Content/MagicBook.png" alt="Your Image" class="logo-image" />
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("All books", "Books", "Books", new { area = "" }, new { @class = "nav-link fa fa-book" })</li>
+                    <li>@Html.ActionLink("Cart", "Index", "PurchasedProducts", new { area = "" }, new { @class = "nav-link fa fa-shopping-cart" })</li>
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Publisher"))
+            {
+                <li>@Html.ActionLink("New Book", "Create", "Books", new { area = "" }, new { @class = "nav-link fa fa-plus" })</li>
+            }
+                    
+                    
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+
+
+    </div>
+    <div id="footer">
+        <p class="text-center">&copy; 2024 - Magic Book</p>
+        <ul class="text-right" id="socials">
+            <li><a href="https://www.facebook.com/profile.php?id=100009319406619"><i class="fa fa-lg fa-facebook"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/gabriela-ristevska-1b59a7288/"><i class="fa fa-lg fa-linkedin"></i></a></li>
+            <li><a href="https://www.instagram.com/ristevska.g/"><i class="fa fa-lg fa-instagram"></i></a></li>
+        </ul>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

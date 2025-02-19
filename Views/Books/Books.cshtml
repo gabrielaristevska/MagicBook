@@ -1,0 +1,171 @@
+﻿@model PagedList.IPagedList<Project.Models.Book>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Books";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<style>
+    .card {
+        width: 21%;
+        margin-top: 20px;
+    }
+
+    .card-deck {
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+
+    .card-img-top {
+        height: 350px;
+    }
+
+    #top-element {
+        padding-top: 30px;
+        padding-bottom: 10px;
+        color: black;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .search-box {
+        background: #ECECEC;
+        border: 1px solid black;
+        margin-left: 4%;
+    }
+
+    #pagination {
+        margin: auto;
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+    }
+
+    ul.pagination li a:hover {
+        color: white;
+        background: #18151f;
+    }
+
+    ul.pagination li a {
+        color: white;
+        background: #345457;
+        border: none;
+    }
+
+    ul.pagination .active a:hover {
+        color: white;
+        background: #451312;
+        cursor: pointer;
+    }
+
+    ul.pagination .active a {
+        color: white;
+        background: #E4BC7F;
+    }
+
+    #filter-list {
+        color: black;
+    }
+
+    .btn a {
+        color: white;
+    }
+
+    .js-delete {
+        cursor: pointer;
+    }
+
+    .link, .card-title a {
+        text-decoration: none;
+        color: #345457;
+    }
+
+        .link:hover, .card-title a:hover {
+            color: black;
+        }
+
+    .card-footer:hover {
+        background: white;
+    }
+</style>
+
+<div id="container">
+    @using (Html.BeginForm("Books", "Books", FormMethod.Get))
+    {
+
+        <div id="top-element">
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "search-box form-control", @placeholder = "Search" })
+        </div>
+    }
+
+    <div class="card-deck">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <img class="card-img-top" src="@item.ImageUrl" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="Details/@item.Id">@item.Name</a></h5>
+                    <p class="card-text">@item.Author</p>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <p>
+                            <button data-book-id=@item.Id id="delete" class="delete btn btn-dark btn-rounded mr-1">Delete</button>
+                        </p>
+                    }
+                    @if (User.IsInRole("Publisher"))
+                    {
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class= "btn btn-dark btn-rounded mr-1" })
+                        </p>
+                    }
+                </div>
+                <div class="card-footer">
+                    <i class="fa fa-shopping-cart">@Html.ActionLink("Add To Cart", "Create", "PurchasedProducts", new { id = item.Id, returnUrl = Request.RawUrl }, new { @class = "link" })</i>
+                </div>
+            </div>
+        }
+    </div>
+
+    <br />
+    <div id="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("Books", new { page, searchString = ViewBag.CurrentFilter }))
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".delete").on("click", function (e) {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this book?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/Books/Delete/" + button.attr("data-book-id"),
+                            method: "GET",
+                            success: function () {
+
+                            }
+                        });
+                        $(document).ajaxStop(function () {
+                            window.location.reload();
+                        });
+                    }
+                });
+            })
+        })
+    </script>
+
+
+}
+
+
+
